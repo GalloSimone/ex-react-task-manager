@@ -1,44 +1,40 @@
-import { useContext } from 'react';
-import { GlobalContext } from '../context/GlobalContext';
+import { useGlobalContext } from "../context/GlobalContext";
 
 export default function TaskList() {
-    const { task } = useContext(GlobalContext);
+    const { tasks } = useGlobalContext(); // Usa il tuo custom hook
 
     return (
-        <div className="container mt-4">
-            <h1 className="mb-4">Lista Task</h1>
-            {task?.length === 0 ? (
-                <p className="alert alert-warning">Nessun task disponibile</p>
+        <div>
+            <h1>Lista Task</h1>
+            {tasks.length === 0 ? (
+                <p>Non ci sono task disponibili</p>
             ) : (
-                <div className="table-responsive">
-                    <table className="table table-striped table-hover">
-                        <thead className="table-dark">
-                            <tr>
-                                <th>Nome</th>
-                                <th>Stato</th>
-                                <th>Data di Creazione</th>
+                <table className="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Stato</th>
+                            <th>Data di Creazione</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {tasks.map((task) => (
+                            <tr key={task.id}>
+                                <td>{task.title}</td>
+                                <td>
+                                    <span className={`badge ${getStatusClass(task.status)}`}>
+                                        {task.status}
+                                    </span>
+                                </td>
+                                <td> {new Date (task.createdAt).toLocaleDateString()}</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {task?.map((taskItem) => (
-                                <tr key={taskItem.id}>
-                                    <td>{taskItem.title}</td>
-                                    <td>
-                                        <span className={`badge ${getStatusClass(taskItem.status)}`}>
-                                            {taskItem.status}
-                                        </span>
-                                    </td>
-                                    <td>{new Date(taskItem.createdAt).toLocaleDateString()}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                        ))}
+                    </tbody>
+                </table>
             )}
         </div>
     );
 }
-
 
 const getStatusClass = (status) => {
     switch (status) {
