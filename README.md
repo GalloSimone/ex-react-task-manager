@@ -43,22 +43,23 @@ Effettuare una richiesta GET a /tasks al caricamento dell'app, utilizzando useEf
 Stampare in console i dati ricevuti per verificare il corretto recupero delle informazioni.✅
 
 Rendere disponibile il GlobalContext.Provider in App.jsx, avvolgendo l'intera applicazione.
+✅
 📌 Milestone 3 - Lista dei Task (Pagina)
 
-Visualizzare l'elenco dei task in una tabella e ottimizzare il rendering con React.memo().
+Visualizzare l'elenco dei task in una tabella e ottimizzare il rendering con React.memo().✅
 
-Recuperare la lista dei task dal GlobalContext e mostrarla nella pagina TaskList.jsx.
+Recuperare la lista dei task dal GlobalContext e mostrarla nella pagina TaskList.jsx.✅
 
-Strutturare TaskList.jsx come una tabella, con le intestazioni Nome, Stato, Data di Creazione.
+Strutturare TaskList.jsx come una tabella, con le intestazioni Nome, Stato, Data di Creazione.✅
 
-Creare un componente TaskRow.jsx, che rappresenta una singola riga della tabella e mostra solo le proprietà title, status e createdAt (escludendo description).
+Creare un componente TaskRow.jsx, che rappresenta una singola riga della tabella e mostra solo le proprietà title, status e createdAt (escludendo description).✅
 
 Applicare uno stile differente alla colonna status, assegnando i seguenti colori di sfondo alle celle in base al valore dello stato:
 "To do" → rosso
 "Doing" → giallo
-"Done" → verde
+"Done" → verde✅
 
-Utilizzare React.memo() su TaskRow.jsx per ottimizzare le prestazioni ed evitare render inutili.
+Utilizzare React.memo() su TaskRow.jsx per ottimizzare le prestazioni ed evitare render inutili.✅
 📌 Milestone 4 - Creazione del Custom Hook useTasks() (GET)
 
 Creare un custom hook per centralizzare la gestione dei task e semplificare l'accesso ai dati.
