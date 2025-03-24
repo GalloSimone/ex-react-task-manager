@@ -1,74 +1,90 @@
-import { useState,useRef } from "react"
+import { useState, useRef } from 'react';
+import useTasks from '../hooks/UseTasks';
+
 const symbols = "!@#$%^&*()-_=+[]{}|;:'\\\",.<>?/`~";
 
-export default function AddTask(){
-    const [name,setName]=useState('')
-    const [error,setError]=useState('')
+export default function AddTask() {
+  const [name, setName] = useState('');
+  const [error, setError] = useState('');
+  const descriptionRef = useRef();
+  const [status, setStatus] = useState('To do');
 
-    const descriptionRef=useRef();
+  const { addTask } = useTasks();
 
-    const[status,setStatus]=useState("to do");
-
-    const handleNameChange=(e)=>{ 
+  const handleNameChange = (e) => {
     const newName = e.target.value;
-        setName(newName)
-    
-    if (symbols.split('').some(symbol=>newName.includes((symbol)))) {
-        setError("il nome non puo contenere simboli speciali")
-        
-    }
-    else if (newName.trim().split(/\s+/).length<3) {
-        setError("il nome deve contenere almeno 3 parole")
-    }
-    else{setError('')}
-}
+    setName(newName);
 
-const handleStatusChange=(e)=>{
+    if (symbols.split('').some((symbol) => newName.includes(symbol))) {
+      setError('Il nome non può contenere simboli speciali');
+    } else if (newName.trim().split(/\s+/).length < 3) {
+      setError('Il nome deve contenere almeno 3 parole');
+    } else {
+      setError('');
+    }
+  };
+
+  const handleStatusChange = (e) => {
     setStatus(e.target.value);
-}
+  };
 
-const handleSubmit=(e)=>{e.preventDefault();
-    const description=descriptionRef.current.value;
-    console.log({
-        title: name,
-        description: description,
-        status: status
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (error) {
+      alert('Correggi gli errori nel nome');
+      return;
+    }
+
+    const description = descriptionRef.current.value;
+    const result = await addTask({
+      title: name,
+      description,
+      status,
     });
-    
-}
-    return(
-     <>
-     <form className="row g-3" onSubmit={handleSubmit}>
-        <div className="col-md-6">
-      <input 
-      type="text" 
-      className="form-control"
-      placeholder="nome task"
-      value={name}
-      onChange={handleNameChange}
-       />
-       {error && <p style={{color:'red'}}>{error}</p>}
 
-       <textarea 
-       ref={descriptionRef}
-      placeholder="descrizione"
-      className="form-control"
-       />
+    if (result.success) {
+      alert('Task aggiunto con successo!');
+      setName('');
+      descriptionRef.current.value = '';
+      setStatus('To do');
+    } else {
+      alert(result.message);
+    }
+  };
 
-       <select 
-       value={status}
-       onChange={handleStatusChange}
-       name="status" 
-       className="form-select"
-       >
-      <option value="To do">To do</option>
-      <option value="Doing">Doing</option>
-      <option value="Done">Done</option>
-     
-       </select>
-       <button type="submit" className="btn btn-primary">aggiungi task</button>
-       </div>
-     </form>
-     </>   
-    )
+  return (
+    <form className="row g-3" onSubmit={handleSubmit}>
+      <div className="col-md-6">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Nome task"
+          value={name}
+          onChange={handleNameChange}
+        />
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+
+        <textarea
+          ref={descriptionRef}
+          placeholder="Descrizione"
+          className="form-control"
+        />
+
+        <select
+          value={status}
+          onChange={handleStatusChange}
+          className="form-select"
+        >
+          <option value="To do">To do</option>
+          <option value="Doing">Doing</option>
+          <option value="Done">Done</option>
+        </select>
+
+        <button type="submit" className="btn btn-primary">
+          Aggiungi task
+        </button>
+      </div>
+    </form>
+  );
 }
