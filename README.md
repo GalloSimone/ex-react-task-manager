@@ -170,6 +170,7 @@ Implementare i pulsanti "Annulla" (chiude la modale) e "Conferma" (esegue onConf
 Integrare il componente Modal in TaskDetail.jsx per confermare l'eliminazione:
 Quando l’utente clicca su "Elimina Task", deve aprirsi la modale di conferma.
 Se l’utente conferma, vengono eseguite le stesse operazioni della Milestone 8.
+
 📌 Milestone 10 - Modale e Funzione di Modifica Task (PUT)
 
 Creare una modale per modificare i dettagli di un task e aggiornare i dati tramite API.
