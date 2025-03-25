@@ -126,7 +126,7 @@ Aggiungere la rotta /task/:id che caricherà il componente TaskDetail.jsx.
 Creare TaskDetail.jsx per mostrare:
 Nome (title)
 Descrizione (description)
-Stato (statusś
+Stato (status)
 Data di creazione (createdAt)
 Un bottone "Elimina Task", che per ora stampa solo "Elimino task" in console.
 📌 Milestone 8 - Funzione di Eliminazione Task (DELETE)

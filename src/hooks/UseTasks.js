@@ -14,9 +14,9 @@ export default function useTasks() {
       }
   
       const data = await response.json();
-      console.log("Risposta API:", data); // Debugging
+      console.log("Risposta API:", data); 
   
-      // Se la risposta è un array, impostiamo direttamente i task
+      
       if (Array.isArray(data)) {
         setTasks(data);
       } else if (data.success && Array.isArray(data.tasks)) {

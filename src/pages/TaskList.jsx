@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useTasks from '../hooks/UseTasks';
 
 export default function TaskList() {
   const { tasks, fetchTasks, loading, error } = useTasks();
+  const navigate =useNavigate()
 
   useEffect(() => {
     fetchTasks();
@@ -14,6 +16,10 @@ export default function TaskList() {
 
   if (error) {
     return <p style={{ color: 'red' }}>Errore: {error}</p>;
+  }
+
+  const goToDetail = (taskId)=>{
+    navigate(`/task/${taskId}`)
   }
 
   return (
@@ -38,6 +44,9 @@ export default function TaskList() {
                                         {task.status}
                                     </span></td>
                 <td>{new Date(task.createdAt).toLocaleDateString()}</td>
+                <td>
+                  <button onClick={()=>goToDetail(task.id)} className='btn btn-primary'>dettaglio task</button>
+                </td>
               </tr>
             ))}
           </tbody>
