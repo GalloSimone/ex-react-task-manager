@@ -58,9 +58,31 @@ export default function useTasks() {
     }
   };
 
+  const removeTask = async (taskId) => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/tasks/${taskId}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) {
+        throw new Error("Errore nell'eliminazione del task");
+      }
+      const data = await response.json();
+
+      if (data.success) {
+        setTasks((prevTasks) => prevTasks.filter((task)=>task.id !== taskId));
+        return { success: true };
+      } else {
+        throw new Error(data.message);
+      }
+    } catch (error) {
+      console.error('Error durante l\'eliminazione del  task:', error);
+      return { success: false, message: error.message };
+    }
+  };
+
   useEffect(() => {
     fetchTasks();
   }, []);
 
-  return { tasks, addTask, fetchTasks, loading, error };
+  return { tasks, addTask, fetchTasks,removeTask, loading, error };
 }

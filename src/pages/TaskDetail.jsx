@@ -1,39 +1,30 @@
-import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useParams,useNavigate } from "react-router-dom";
+import  useTasks  from "../hooks/UseTasks"
 
 export default function TaskDetail() {
     const { id } = useParams();
-    console.log(id)
-    const [task, setTask] = useState(null);
+  const { tasks, removeTask } = useTasks();
+  const navigate = useNavigate();
+  
+ 
+  const task = tasks.find((task) => task.id === parseInt(id));
 
-    useEffect(() => {
-        console.log("Fetching task with ID:", id); // Log per vedere quale ID viene passato
-        const fetchTask = async () => {
-            try {
-                const response = await fetch(`${import.meta.env.VITE_API_URL}/tasks/${id}`);
-                if (!response.ok) {
-                    throw new Error("Task not found");
-                }
-                const data = await response.json();
-                if (data.success) {
-                    setTask(data.task);
-                } else {
-                    throw new Error("Task not found");
-                }
-            } catch (error) {
-                setError("Error fetching task. Please try again.");
-                console.error("Error fetching task:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-    
-        fetchTask();
-    }, [id]);
+ 
+  const handleRemove = async () => {
+    const result = await removeTask(task.id); 
 
-    if (!task) {
-        return <p>Loading task...</p>;
+    if (result.success) {
+      alert('Task eliminato con successo');
+      navigate('/');
+    } else {
+      alert(`Errore: ${result.message}`);
     }
+  };
+
+
+  if (!task) {
+    return <p>Caricamento task...</p>;
+  }
 
     return (
         <>
@@ -45,7 +36,7 @@ export default function TaskDetail() {
                     <p className="card-subtitle mb-2 text-body-secondary">
                         Created at: {new Date(task.createdAt).toLocaleDateString()}
                     </p>
-                    <button onClick={() => console.log("Elimino task")}>Elimina task</button>
+                    <button onClick={handleRemove} className="btn btn-danger">Elimina task</button>
                 </div>
             </div>
         </>
