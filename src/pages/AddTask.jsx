@@ -17,7 +17,7 @@ export default function AddTask() {
 
     if (symbols.split('').some((symbol) => newName.includes(symbol))) {
       setError('Il nome non può contenere simboli speciali');
-    } else if (newName.trim().split(/\s+/).length < 3) {
+    } else if (newName.trim().split(/\s+/).length < 1) {
       setError('Il nome deve contenere almeno 3 parole');
     } else {
       setError('');
