@@ -53,18 +53,60 @@ const TaskDetail = () => {
   if (!task) return <p>Task non trovato</p>;
 
   return (
-    <div>
-      <h1>Dettagli Task</h1>
-      <p><strong>Nome:</strong> {task.title}</p>
-      <p><strong>Descrizione:</strong> {task.description}</p>
-      <p><strong>Stato:</strong> {task.status}</p>
-      <button onClick={() => setShowEditModal(true)} className="btn btn-primary">Modifica Task</button>
-      <button onClick={() => setShowDeleteModal(true)} className="btn btn-danger">Elimina Task</button>
-
-      <EditTaskModal show={showEditModal} onClose={() => setShowEditModal(false)} task={task} onSave={handleSave} />
-      <Modal title="Conferma Eliminazione" content="Sei sicuro di voler eliminare questo task?" show={showDeleteModal} onClose={() => setShowDeleteModal(false)} onConfirm={handleRemove} />
+    <div className="container mt-5">
+    <div className="card shadow-lg">
+      <div className="card-header text-center">
+        <h3>Dettagli Task</h3>
+      </div>
+      <div className="card-body">
+        <p><strong>Nome:</strong> {task.title}</p>
+        <p><strong>Descrizione:</strong> {task.description}</p>
+        <p><strong>Stato:</strong> <span className={`badge ${getStatusClass(task.status)}`}>{task.status}</span></p>
+        
+        <div className="d-flex justify-content-between mt-4">
+          <button
+            onClick={() => setShowEditModal(true)}
+            className="btn btn-primary w-48"
+          >
+            Modifica Task
+          </button>
+          <button
+            onClick={() => setShowDeleteModal(true)}
+            className="btn btn-danger w-48"
+          >
+            elimina task
+          </button>
+        </div>
+      </div>
     </div>
+
+    <EditTaskModal
+      show={showEditModal}
+      onClose={() => setShowEditModal(false)}
+      task={task}
+      onSave={handleSave}
+    />
+    <Modal
+      title="Conferma Eliminazione"
+      content="Sei sicuro di voler eliminare questo task?"
+      show={showDeleteModal}
+      onClose={() => setShowDeleteModal(false)}
+      onConfirm={handleRemove}
+    />
+  </div>
   );
+};
+const getStatusClass = (status) => {
+  switch (status) {
+    case 'To do':
+      return 'bg-danger text-white';
+    case 'Doing':
+      return 'bg-warning text-dark';
+    case 'Done':
+      return 'bg-success text-white';
+    default:
+      return 'bg-secondary text-white';
+  }
 };
 
 export default TaskDetail;

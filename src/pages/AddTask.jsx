@@ -54,37 +54,54 @@ export default function AddTask() {
   };
 
   return (
-    <form className="row g-3" onSubmit={handleSubmit}>
-      <div className="col-md-6">
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Nome task"
-          value={name}
-          onChange={handleNameChange}
-        />
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+    <div className="container mt-5">
+      <div className="card shadow-lg">
+        <div className="card-header text-center">
+          <h3>Aggiungi Nuovo Task</h3>
+        </div>
+        <div className="card-body">
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label htmlFor="name" className="form-label">Nome Task</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Nome task"
+                value={name}
+                onChange={handleNameChange}
+              />
+              {error && <p className="text-danger mt-2">{error}</p>}
+            </div>
 
-        <textarea
-          ref={descriptionRef}
-          placeholder="Descrizione"
-          className="form-control"
-        />
+            <div className="mb-3">
+              <label htmlFor="description" className="form-label">Descrizione Task</label>
+              <textarea
+                ref={descriptionRef}
+                placeholder="Descrizione"
+                className="form-control"
+                rows="4"
+              />
+            </div>
 
-        <select
-          value={status}
-          onChange={handleStatusChange}
-          className="form-select"
-        >
-          <option value="To do">To do</option>
-          <option value="Doing">Doing</option>
-          <option value="Done">Done</option>
-        </select>
+            <div className="mb-3">
+              <label htmlFor="status" className="form-label">Scegli lo Status</label>
+              <select
+                value={status}
+                onChange={handleStatusChange}
+                className="form-select"
+              >
+                <option value="To do">To do</option>
+                <option value="Doing">Doing</option>
+                <option value="Done">Done</option>
+              </select>
+            </div>
 
-        <button type="submit" className="btn btn-primary">
-          Aggiungi task
-        </button>
+            <button type="submit" className="btn btn-primary w-100">
+              Aggiungi Task
+            </button>
+          </form>
+        </div>
       </div>
-    </form>
+    </div>
   );
 }
