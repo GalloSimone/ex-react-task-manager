@@ -80,11 +80,11 @@ const handleSearch=useCallback(
           <h3 className="mb-0">Lista Task</h3>
         </div>
         <div className="card-body">
-          {/* Campo di ricerca */}
+      
           <div className="mb-3">
             <input
               type="text"
-              value={searchQuery}
+              
               placeholder="Cerca task per nome..."
               onChange={(e) => handleSearch(e.target.value)}
               className="form-control"
